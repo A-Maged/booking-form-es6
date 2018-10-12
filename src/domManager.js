@@ -11,7 +11,7 @@ let datePicker,
 	destinitionList = reservationForm.querySelector('[ data-hook*=destinition-list]');
 
 /* ***************************************************************** */
-/* Functions That Changes DOM Depending on State (render functions) */
+/* Functions That Changes The DOM Depending on State (render functions) */
 /* **************************************************************** */
 
 function updateDestination() {

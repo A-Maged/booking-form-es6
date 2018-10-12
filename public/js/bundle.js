@@ -1543,7 +1543,7 @@ var datePicker,
     destinitionList = reservationForm.querySelector('[ data-hook*=destinition-list]');
 /* ***************************************************************** */
 
-/* Functions That Changes DOM Depending on State (render functions) */
+/* Functions That Changes The DOM Depending on State (render functions) */
 
 /* **************************************************************** */
 
@@ -1825,8 +1825,8 @@ __webpack_require__.r(__webpack_exports__);
 var reservationForm = document.querySelector('[data-hook=reservation-form]'),
     checkInOutField = reservationForm.querySelector('[data-hook=form-field-check-in-out]'),
     occupancyField = reservationForm.querySelector('[data-hook=form-field-occupancy]'),
-    occupancyDropDown = occupancyField.querySelector('.form-field__dropdown--occupancy'),
     searchField = reservationForm.querySelector('[ data-hook=form-field-search]'),
+    occupancyDropDown = occupancyField.querySelector('.form-field__dropdown--occupancy'),
     destinitionList = reservationForm.querySelector('[ data-hook*=destinition-list]');
 /*******************************/
 
@@ -1836,46 +1836,58 @@ var reservationForm = document.querySelector('[data-hook=reservation-form]'),
 
 /* update Destination from event value */
 
-searchField.addEventListener('input', function (e) {
+searchField.addEventListener('input', function updateDestinationFromEvent(e) {
   _store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch(_actions__WEBPACK_IMPORTED_MODULE_1__["updateDestination"](e.target.value));
 });
 /* update Destination from li */
 
-destinitionList.addEventListener('click', function (e) {
+destinitionList.addEventListener('click', function updateDestinationFromElement() {
   _store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch(_actions__WEBPACK_IMPORTED_MODULE_1__["updateDestination"](e.target.innerHTML));
 });
 /* show destination list */
 
-searchField.addEventListener('focus', function (e) {
+searchField.addEventListener('focus', function showDestinationList(e) {
   _store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch(_actions__WEBPACK_IMPORTED_MODULE_1__["showDestinitionList"]());
 });
 /* hide destination list */
 
-document.addEventListener('click', function (e) {
+document.addEventListener('click', function hideDestinationList(e) {
   if (e.target !== searchField && _store__WEBPACK_IMPORTED_MODULE_0__["default"].getState().ui.visibleDropdown === 'destination-list') {
     _store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch(_actions__WEBPACK_IMPORTED_MODULE_1__["hideDropDown"]());
   }
 });
 /* show DatePicker Modal */
 
-checkInOutField.addEventListener('click', function (e) {
+checkInOutField.addEventListener('click', function showDatePickerModal(e) {
   _store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch(_actions__WEBPACK_IMPORTED_MODULE_1__["showDatePickerModal"]());
 });
 /* toggle occupancy-dropDown */
 
-occupancyField.addEventListener('click', function (e) {
+occupancyField.addEventListener('click', function toggleOccupancyDropDown(e) {
   e.stopPropagation();
 
   if (e.target === e.currentTarget || e.target === occupancyField.querySelector('.form-field__icon') || e.target === occupancyField.querySelector('.form-field__value-box')) {
+    console.log('toggleOccupancyDropDown');
     _store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch(_actions__WEBPACK_IMPORTED_MODULE_1__["toggleOccupancyDropDown"]());
   }
 });
 /* hide occupancy-dropDown */
 
-document.addEventListener('click', function (e) {
+document.addEventListener('click', function hideOccupancyDropDown(e) {
   if (_store__WEBPACK_IMPORTED_MODULE_0__["default"].getState().ui.visibleDropdown === 'occupancy-dropDown' && e.target !== occupancyDropDown) {
+    console.log('hideOccupancyDropDown');
     _store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch(_actions__WEBPACK_IMPORTED_MODULE_1__["hideDropDown"]());
   }
+});
+/* add occupancy-room */
+
+occupancyDropDown.addEventListener('click', function (e) {
+  var addRoomBtn = document.querySelector('[data-hook=occupancy-add-room]');
+  if (e.target !== addRoomBtn) return;
+  _store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch(_actions__WEBPACK_IMPORTED_MODULE_1__["updateOccopancy"]({
+    adults: 1,
+    children: 0
+  }));
 });
 
 /***/ }),
