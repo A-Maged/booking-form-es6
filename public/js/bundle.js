@@ -1596,7 +1596,6 @@ checkInOutField.addEventListener('click', function (e) {
 /* toggle occupancy-dropDown */
 
 occupancyField.addEventListener('click', function (e) {
-  console.log('occupancyField');
   e.stopPropagation();
 
   if (_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].getState().ui.visibleDropdown === 'occupancy-dropDown') {
@@ -1624,7 +1623,7 @@ document.addEventListener('click', function (e) {
 /*******************************/
 
 function updateDestinationDOM() {
-  searchField.innerHTML = _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].getState().destinition;
+  searchField.value = _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].getState().form.destinition;
 }
 
 function showDestinationListDOM() {
@@ -1647,8 +1646,8 @@ function showDatePickerDOM() {
 }
 
 function updateOccopancyDOM() {
-  var state = _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].getState().form.occupancy; // occupancyDropDown.innerHTML = '';
-
+  var state = _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].getState().form.occupancy;
+  occupancyDropDown.innerHTML = "\n\t\t<button data-hook=\"occupancy-add-room\" class=\"occupancy__add-room\">add room</button>\n\t";
   state.forEach(function (room, idx) {
     occupancyDropDown.innerHTML += "\n\t\t\t<div class=\"occupancy__room\">\n\t\t\t\t<span class=\"occupancy__room__label\">Room ".concat(idx + 1, "</span>\n\t\t\t\t<select name=\"occupancy__room-").concat(idx, "-adults\">\n\t\t\t\t\t<option selected=\"selected\" value=\"").concat(room.adults, "\">").concat(room.adults, "</option>\n\t\t\t\t\t<option value=\"1\">1</option>\n\t\t\t\t\t<option value=\"2\">2</option>\n\t\t\t\t\t<option value=\"3\">3</option>\n\t\t\t\t</select>\n\t\t\t</div>\n\t\t");
   });
@@ -1656,7 +1655,6 @@ function updateOccopancyDOM() {
 
 function showOccupancyDropDownDOM() {
   if (_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].getState().ui.visibleDropdown === 'occupancy-dropDown') {
-    console.log('showOccupancyDropDownDOM');
     occupancyDropDown.classList.add('visibile');
   }
 }
@@ -1799,7 +1797,10 @@ var formInitialState = {
     start: '1',
     end: '2'
   },
-  occupancy: []
+  occupancy: [{
+    adults: 1,
+    children: 0
+  }]
 };
 
 function formReducer() {

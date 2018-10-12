@@ -6,7 +6,12 @@ let formInitialState = {
 		start: '1',
 		end: '2'
 	},
-	occupancy: []
+	occupancy: [
+		{
+			adults: 1,
+			children: 0
+		}
+	]
 };
 
 function formReducer(state = formInitialState, action) {

@@ -61,8 +61,6 @@ checkInOutField.addEventListener('click', e => {
 /* field: occupancy */
 /* toggle occupancy-dropDown */
 occupancyField.addEventListener('click', e => {
-	console.log('occupancyField');
-
 	e.stopPropagation();
 
 	if (store.getState().ui.visibleDropdown === 'occupancy-dropDown') {
@@ -95,7 +93,7 @@ document.addEventListener('click', e => {
 /*******************************/
 
 function updateDestinationDOM() {
-	searchField.innerHTML = store.getState().destinition;
+	searchField.value = store.getState().form.destinition;
 }
 
 function showDestinationListDOM() {
@@ -119,7 +117,9 @@ function showDatePickerDOM() {
 
 function updateOccopancyDOM() {
 	let state = store.getState().form.occupancy;
-	// occupancyDropDown.innerHTML = '';
+	occupancyDropDown.innerHTML = `
+		<button data-hook="occupancy-add-room" class="occupancy__add-room">add room</button>
+	`;
 
 	state.forEach((room, idx) => {
 		occupancyDropDown.innerHTML += `
@@ -138,8 +138,6 @@ function updateOccopancyDOM() {
 
 function showOccupancyDropDownDOM() {
 	if (store.getState().ui.visibleDropdown === 'occupancy-dropDown') {
-		console.log('showOccupancyDropDownDOM');
-
 		occupancyDropDown.classList.add('visibile');
 	}
 }
