@@ -11,7 +11,7 @@ let datePicker,
 	destinitionList = reservationForm.querySelector('[ data-hook*=destinition-list]');
 
 /* ***************************************************************** */
-/* Functions That Changes The DOM Depending on State (render functions) */
+/* Functions That Changes The DOM Based on State (render functions) */
 /* **************************************************************** */
 
 function updateDestination() {
@@ -39,6 +39,7 @@ function showDatePicker() {
 
 function updateOccopancy() {
 	let state = store.getState().form.occupancy;
+
 	occupancyDropDown.innerHTML = `
 		<button data-hook="occupancy-add-room" class="occupancy__add-room">add room</button>
 	`;

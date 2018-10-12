@@ -18,7 +18,7 @@ searchField.addEventListener('input', function updateDestinationFromEvent(e) {
 });
 
 /* update Destination from li */
-destinitionList.addEventListener('click', function updateDestinationFromElement() {
+destinitionList.addEventListener('click', function updateDestinationFromElement(e) {
 	store.dispatch(actions.updateDestination(e.target.innerHTML));
 });
 

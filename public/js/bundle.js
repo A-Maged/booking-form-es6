@@ -1543,7 +1543,7 @@ var datePicker,
     destinitionList = reservationForm.querySelector('[ data-hook*=destinition-list]');
 /* ***************************************************************** */
 
-/* Functions That Changes The DOM Depending on State (render functions) */
+/* Functions That Changes The DOM Based on State (render functions) */
 
 /* **************************************************************** */
 
@@ -1841,7 +1841,7 @@ searchField.addEventListener('input', function updateDestinationFromEvent(e) {
 });
 /* update Destination from li */
 
-destinitionList.addEventListener('click', function updateDestinationFromElement() {
+destinitionList.addEventListener('click', function updateDestinationFromElement(e) {
   _store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch(_actions__WEBPACK_IMPORTED_MODULE_1__["updateDestination"](e.target.innerHTML));
 });
 /* show destination list */
