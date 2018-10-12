@@ -1,34 +1,7 @@
 import rootReducer from './rootReducer';
+import { createStore } from 'redux';
 
-const creatStore = reducer => {
-	var listeners = [];
-	var state = reducer(undefined, { type: '' });
-
-	const getState = () => {
-		return state;
-	};
-
-	const subscribe = listener => {
-		listeners.push(listener);
-		return () => listeners.filter(currentListener => currentListener !== listener);
-	};
-
-	const dispatch = action => {
-		console.log('action fired: ', action.type, action);
-
-		state = reducer(state, action);
-
-		listeners.map(cb => cb());
-	};
-
-	return {
-		getState,
-		subscribe,
-		dispatch
-	};
-};
-
-const store = creatStore(rootReducer);
+const store = createStore(rootReducer);
 
 // FOR DEBUGGING
 window.store = store;

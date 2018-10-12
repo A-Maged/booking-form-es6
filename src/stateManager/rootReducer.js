@@ -1,4 +1,5 @@
 import { actionTypes } from './actions';
+import { combineReducers } from 'redux';
 
 let formInitialState = {
 	destinition: '',
@@ -48,12 +49,9 @@ function uiReducer(state = uiInitialState, action) {
 			return state;
 	}
 }
-
-function rootReducer(state = {}, action) {
-	return {
-		form: formReducer(state.form, action),
-		ui: uiReducer(state.ui, action)
-	};
-}
+const rootReducer = combineReducers({
+	form: formReducer,
+	ui: uiReducer
+});
 
 export default rootReducer;
