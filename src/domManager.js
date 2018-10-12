@@ -58,9 +58,9 @@ function updateOccopancy() {
 	});
 }
 
-function showOccupancyDropDown() {
+function toggleOccupancyDropDown() {
 	if (store.getState().ui.visibleDropdown === 'occupancy-dropDown') {
-		occupancyDropDown.classList.add('visibile');
+		occupancyDropDown.classList.toggle('visibile');
 	}
 }
 
@@ -78,5 +78,5 @@ store.subscribe(updateOccopancy);
 store.subscribe(showDestinationList);
 store.subscribe(hideDestinationList);
 store.subscribe(showDatePicker);
-store.subscribe(showOccupancyDropDown);
+store.subscribe(toggleOccupancyDropDown);
 store.subscribe(hideOccupancyDropDown);

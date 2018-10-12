@@ -1,3 +1,5 @@
+import store from './store';
+
 export const actionTypes = {
 	UPDATE_DESTINATION: 'UPDATE_DESTINATION',
 	UPDATE_CHECK_IN_OUT: 'UPDATE_CHECK_IN_OUT',
@@ -51,9 +53,10 @@ export const showDatePickerModal = () => {
 		value: 'date-picker-modal'
 	};
 };
-export const showOccupancyDropDown = () => {
+export const toggleOccupancyDropDown = () => {
 	return {
 		type: actionTypes.UPDATE_VISIBLE_DROPDOWN,
-		value: 'occupancy-dropDown'
+		value: (() =>
+			store.getState().ui.visibleDropdown === 'occupancy-dropDown' ? '' : 'occupancy-dropDown')()
 	};
 };

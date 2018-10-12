@@ -43,17 +43,12 @@ checkInOutField.addEventListener('click', e => {
 occupancyField.addEventListener('click', e => {
 	e.stopPropagation();
 
-	if (store.getState().ui.visibleDropdown === 'occupancy-dropDown') {
-		store.dispatch(actions.hideDropDown());
-		return;
-	}
-
 	if (
 		e.target === e.currentTarget ||
 		e.target === occupancyField.querySelector('.form-field__icon') ||
 		e.target === occupancyField.querySelector('.form-field__value-box')
 	) {
-		store.dispatch(actions.showOccupancyDropDown());
+		store.dispatch(actions.toggleOccupancyDropDown());
 	}
 });
 

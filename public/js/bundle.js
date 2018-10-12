@@ -1578,9 +1578,9 @@ function updateOccopancy() {
   });
 }
 
-function showOccupancyDropDown() {
+function toggleOccupancyDropDown() {
   if (_stateManager_store__WEBPACK_IMPORTED_MODULE_0__["default"].getState().ui.visibleDropdown === 'occupancy-dropDown') {
-    occupancyDropDown.classList.add('visibile');
+    occupancyDropDown.classList.toggle('visibile');
   }
 }
 
@@ -1601,7 +1601,7 @@ _stateManager_store__WEBPACK_IMPORTED_MODULE_0__["default"].subscribe(updateOcco
 _stateManager_store__WEBPACK_IMPORTED_MODULE_0__["default"].subscribe(showDestinationList);
 _stateManager_store__WEBPACK_IMPORTED_MODULE_0__["default"].subscribe(hideDestinationList);
 _stateManager_store__WEBPACK_IMPORTED_MODULE_0__["default"].subscribe(showDatePicker);
-_stateManager_store__WEBPACK_IMPORTED_MODULE_0__["default"].subscribe(showOccupancyDropDown);
+_stateManager_store__WEBPACK_IMPORTED_MODULE_0__["default"].subscribe(toggleOccupancyDropDown);
 _stateManager_store__WEBPACK_IMPORTED_MODULE_0__["default"].subscribe(hideOccupancyDropDown);
 
 /***/ }),
@@ -1641,7 +1641,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!*************************************!*\
   !*** ./src/stateManager/actions.js ***!
   \*************************************/
-/*! exports provided: actionTypes, updateDestination, updateCheckInOut, updateOccopancy, showDestinitionList, hideDropDown, showDatePickerModal, showOccupancyDropDown */
+/*! exports provided: actionTypes, updateDestination, updateCheckInOut, updateOccopancy, showDestinitionList, hideDropDown, showDatePickerModal, toggleOccupancyDropDown */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1653,7 +1653,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "showDestinitionList", function() { return showDestinitionList; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hideDropDown", function() { return hideDropDown; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "showDatePickerModal", function() { return showDatePickerModal; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "showOccupancyDropDown", function() { return showOccupancyDropDown; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toggleOccupancyDropDown", function() { return toggleOccupancyDropDown; });
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./store */ "./src/stateManager/store.js");
+
 var actionTypes = {
   UPDATE_DESTINATION: 'UPDATE_DESTINATION',
   UPDATE_CHECK_IN_OUT: 'UPDATE_CHECK_IN_OUT',
@@ -1704,10 +1706,12 @@ var showDatePickerModal = function showDatePickerModal() {
     value: 'date-picker-modal'
   };
 };
-var showOccupancyDropDown = function showOccupancyDropDown() {
+var toggleOccupancyDropDown = function toggleOccupancyDropDown() {
   return {
     type: actionTypes.UPDATE_VISIBLE_DROPDOWN,
-    value: 'occupancy-dropDown'
+    value: function () {
+      return _store__WEBPACK_IMPORTED_MODULE_0__["default"].getState().ui.visibleDropdown === 'occupancy-dropDown' ? '' : 'occupancy-dropDown';
+    }()
   };
 };
 
@@ -1862,13 +1866,8 @@ checkInOutField.addEventListener('click', function (e) {
 occupancyField.addEventListener('click', function (e) {
   e.stopPropagation();
 
-  if (_store__WEBPACK_IMPORTED_MODULE_0__["default"].getState().ui.visibleDropdown === 'occupancy-dropDown') {
-    _store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch(_actions__WEBPACK_IMPORTED_MODULE_1__["hideDropDown"]());
-    return;
-  }
-
   if (e.target === e.currentTarget || e.target === occupancyField.querySelector('.form-field__icon') || e.target === occupancyField.querySelector('.form-field__value-box')) {
-    _store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch(_actions__WEBPACK_IMPORTED_MODULE_1__["showOccupancyDropDown"]());
+    _store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch(_actions__WEBPACK_IMPORTED_MODULE_1__["toggleOccupancyDropDown"]());
   }
 });
 /* hide occupancy-dropDown */
