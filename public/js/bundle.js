@@ -1541,11 +1541,11 @@ var datePicker,
     occupancyField = reservationForm.querySelector('[data-hook=form-field-occupancy]'),
     occupancyDropDown = occupancyField.querySelector('.form-field__dropdown--occupancy'),
     destinitionList = reservationForm.querySelector('[ data-hook*=destinition-list]');
-/*******************************/
+/* ***************************************************************** */
 
-/* Functions That Changes DOM */
+/* Functions That Changes DOM Depending on State (render functions) */
 
-/*******************************/
+/* **************************************************************** */
 
 function updateDestination() {
   searchField.value = _stateManager_store__WEBPACK_IMPORTED_MODULE_0__["default"].getState().form.destinition;

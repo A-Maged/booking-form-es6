@@ -10,9 +10,9 @@ let datePicker,
 	occupancyDropDown = occupancyField.querySelector('.form-field__dropdown--occupancy'),
 	destinitionList = reservationForm.querySelector('[ data-hook*=destinition-list]');
 
-/*******************************/
-/* Functions That Changes DOM */
-/*******************************/
+/* ***************************************************************** */
+/* Functions That Changes DOM Depending on State (render functions) */
+/* **************************************************************** */
 
 function updateDestination() {
 	searchField.value = store.getState().form.destinition;
