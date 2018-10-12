@@ -32,5 +32,6 @@ const store = creatStore(rootReducer);
 
 // FOR DEBUGGING
 window.store = store;
+store.subscribe(() => console.log(store.getState()));
 
 export default store;
