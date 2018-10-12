@@ -16,33 +16,32 @@ let datePicker,
 // DEBUG
 store.subscribe(() => console.log(store.getState()));
 
-// *******************************************************************
-// NOTE :
-// only change dom using state and predefined functions
-// *******************************************************************
+/*********************************************************
+ * NOTE :
+ * only change dom using predefined functions
+ * that are invoked on state changes
+ *********************************************************/
 
-// ********************************************
-/* type: changes state */
+/* Functions That Changes State */
+/*******************************/
+
 /* field: destinition */
 // update Destination from event value
 searchField.addEventListener('input', e => {
 	store.dispatch(actions.updateDestination(e.target.value));
 });
 
-/* type: changes state */
 /* field: destinition */
 // update Destination from li
 destinitionList.addEventListener('click', e => {
 	store.dispatch(actions.updateDestination(e.target.innerHTML));
 });
 
-/* type: changes state */
 /* field: destinition */
 searchField.addEventListener('focus', e => {
 	store.dispatch(actions.showDestinitionList());
 });
 
-/* type: changes state */
 /* field: destinition */
 document.addEventListener('click', e => {
 	if (e.target !== searchField && store.getState().ui.visibleDropdown === 'destination-list') {
@@ -50,41 +49,37 @@ document.addEventListener('click', e => {
 	}
 });
 
-/* type: changes state */
 /* field: checkInOut */
 checkInOutField.addEventListener('click', e => {
 	store.dispatch(actions.showDatePickerModal());
 });
 
-// ********************************************
-/* type: changes DOM */
-/* field: destinition */
+/* Functions That Changes DOM */
+/*******************************/
+
 function updateDestinationDOM() {
 	searchField.innerHTML = store.getState().destinition;
 }
-/* type: changes DOM */
+
 function showDestinationListDOM() {
 	if (store.getState().ui.visibleDropdown === 'destination-list') {
 		destinitionList.classList.add('visibile');
 	}
 }
-/* type: changes DOM */
+
 function hideDestinationListDOM() {
 	if (store.getState().ui.visibleDropdown !== 'destination-list') {
 		destinitionList.classList.remove('visibile');
 	}
 }
-/* type: changes DOM */
-/* field: checkInOut */
-/* show check-in-out datePicker */
+
 function showDatePickerDOM() {
 	if (store.getState().ui.visibleDropdown === 'date-picker-modal') {
 		modal.open();
 		datePicker = DateRangePicker(document.querySelector('.modal-body'));
 	}
 }
-/* type: changes DOM */
-/* field: occupancy */
+
 function updateOccopancyDOM() {
 	let state = store.getState().form.occupancy;
 	occupancyDropDown.innerHTML = '';
@@ -104,8 +99,8 @@ function updateOccopancyDOM() {
 	});
 }
 
-// ********************************************
-/* type: subscribe to store changes */
+/* Subscribe To Store Changes */
+/* ************************** */
 store.subscribe(updateDestinationDOM);
 store.subscribe(updateOccopancyDOM);
 store.subscribe(showDestinationListDOM);

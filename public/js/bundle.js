@@ -1548,13 +1548,16 @@ var datePicker,
 
 _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe(function () {
   return console.log(_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].getState());
-}); // *******************************************************************
-// NOTE :
-// only change dom using state and predefined functions
-// *******************************************************************
-// ********************************************
+});
+/*********************************************************
+ * NOTE :
+ * only change dom using predefined functions
+ * that are invoked on state changes
+ *********************************************************/
 
-/* type: changes state */
+/* Functions That Changes State */
+
+/*******************************/
 
 /* field: destinition */
 // update Destination from event value
@@ -1562,23 +1565,17 @@ _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe(function (
 searchField.addEventListener('input', function (e) {
   _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(_stateManager_actions__WEBPACK_IMPORTED_MODULE_3__["updateDestination"](e.target.value));
 });
-/* type: changes state */
-
 /* field: destinition */
 // update Destination from li
 
 destinitionList.addEventListener('click', function (e) {
   _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(_stateManager_actions__WEBPACK_IMPORTED_MODULE_3__["updateDestination"](e.target.innerHTML));
 });
-/* type: changes state */
-
 /* field: destinition */
 
 searchField.addEventListener('focus', function (e) {
   _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(_stateManager_actions__WEBPACK_IMPORTED_MODULE_3__["showDestinitionList"]());
 });
-/* type: changes state */
-
 /* field: destinition */
 
 document.addEventListener('click', function (e) {
@@ -1586,43 +1583,30 @@ document.addEventListener('click', function (e) {
     _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(_stateManager_actions__WEBPACK_IMPORTED_MODULE_3__["hideDropDown"]());
   }
 });
-/* type: changes state */
-
 /* field: checkInOut */
 
 checkInOutField.addEventListener('click', function (e) {
   _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(_stateManager_actions__WEBPACK_IMPORTED_MODULE_3__["showDatePickerModal"]());
-}); // ********************************************
+});
+/* Functions That Changes DOM */
 
-/* type: changes DOM */
-
-/* field: destinition */
+/*******************************/
 
 function updateDestinationDOM() {
   searchField.innerHTML = _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].getState().destinition;
 }
-/* type: changes DOM */
-
 
 function showDestinationListDOM() {
   if (_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].getState().ui.visibleDropdown === 'destination-list') {
     destinitionList.classList.add('visibile');
   }
 }
-/* type: changes DOM */
-
 
 function hideDestinationListDOM() {
   if (_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].getState().ui.visibleDropdown !== 'destination-list') {
     destinitionList.classList.remove('visibile');
   }
 }
-/* type: changes DOM */
-
-/* field: checkInOut */
-
-/* show check-in-out datePicker */
-
 
 function showDatePickerDOM() {
   if (_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].getState().ui.visibleDropdown === 'date-picker-modal') {
@@ -1630,10 +1614,6 @@ function showDatePickerDOM() {
     datePicker = Object(tiny_date_picker_dist_date_range_picker__WEBPACK_IMPORTED_MODULE_0__["DateRangePicker"])(document.querySelector('.modal-body'));
   }
 }
-/* type: changes DOM */
-
-/* field: occupancy */
-
 
 function updateOccopancyDOM() {
   var state = _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].getState().form.occupancy;
@@ -1641,9 +1621,10 @@ function updateOccopancyDOM() {
   state.forEach(function (room, idx) {
     occupancyDropDown.innerHTML += "\n\t\t\t<div class=\"occupancy__room\">\n\t\t\t\t<span class=\"occupancy__room__label\">Room ".concat(idx + 1, "</span>\n\t\t\t\t<select name=\"occupancy__room-").concat(idx, "-adults\">\n\t\t\t\t\t<option selected=\"selected\" value=\"").concat(room.adults, "\">").concat(room.adults, "</option>\n\t\t\t\t\t<option value=\"1\">1</option>\n\t\t\t\t\t<option value=\"2\">2</option>\n\t\t\t\t\t<option value=\"3\">3</option>\n\t\t\t\t</select>\n\t\t\t</div>\n\t\t");
   });
-} // ********************************************
+}
+/* Subscribe To Store Changes */
 
-/* type: subscribe to store changes */
+/* ************************** */
 
 
 _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe(updateDestinationDOM);
