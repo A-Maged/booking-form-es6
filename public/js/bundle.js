@@ -1830,40 +1830,33 @@ var reservationForm = document.querySelector('[data-hook=reservation-form]'),
 
 /*******************************/
 
-/* field: destinition */
-// update Destination from event value
+/* update Destination from event value */
 
 searchField.addEventListener('input', function (e) {
   _store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch(_actions__WEBPACK_IMPORTED_MODULE_1__["updateDestination"](e.target.value));
 });
-/* field: destinition */
-// update Destination from li
+/* update Destination from li */
 
 destinitionList.addEventListener('click', function (e) {
   _store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch(_actions__WEBPACK_IMPORTED_MODULE_1__["updateDestination"](e.target.innerHTML));
 });
-/* field: destinition */
-// show destination list
+/* show destination list */
 
 searchField.addEventListener('focus', function (e) {
   _store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch(_actions__WEBPACK_IMPORTED_MODULE_1__["showDestinitionList"]());
 });
-/* field: destinition */
-// hide destination list
+/* hide destination list */
 
 document.addEventListener('click', function (e) {
   if (e.target !== searchField && _store__WEBPACK_IMPORTED_MODULE_0__["default"].getState().ui.visibleDropdown === 'destination-list') {
     _store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch(_actions__WEBPACK_IMPORTED_MODULE_1__["hideDropDown"]());
   }
 });
-/* field: checkInOut */
-// show DatePicker Modal
+/* show DatePicker Modal */
 
 checkInOutField.addEventListener('click', function (e) {
   _store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch(_actions__WEBPACK_IMPORTED_MODULE_1__["showDatePickerModal"]());
 });
-/* field: occupancy */
-
 /* toggle occupancy-dropDown */
 
 occupancyField.addEventListener('click', function (e) {
@@ -1878,8 +1871,6 @@ occupancyField.addEventListener('click', function (e) {
     _store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch(_actions__WEBPACK_IMPORTED_MODULE_1__["showOccupancyDropDown"]());
   }
 });
-/* field: occupancy */
-
 /* hide occupancy-dropDown */
 
 document.addEventListener('click', function (e) {

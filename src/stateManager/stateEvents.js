@@ -12,39 +12,33 @@ let reservationForm = document.querySelector('[data-hook=reservation-form]'),
 /* Functions That Changes State */
 /*******************************/
 
-/* field: destinition */
-// update Destination from event value
+/* update Destination from event value */
 searchField.addEventListener('input', e => {
 	store.dispatch(actions.updateDestination(e.target.value));
 });
 
-/* field: destinition */
-// update Destination from li
+/* update Destination from li */
 destinitionList.addEventListener('click', e => {
 	store.dispatch(actions.updateDestination(e.target.innerHTML));
 });
 
-/* field: destinition */
-// show destination list
+/* show destination list */
 searchField.addEventListener('focus', e => {
 	store.dispatch(actions.showDestinitionList());
 });
 
-/* field: destinition */
-// hide destination list
+/* hide destination list */
 document.addEventListener('click', e => {
 	if (e.target !== searchField && store.getState().ui.visibleDropdown === 'destination-list') {
 		store.dispatch(actions.hideDropDown());
 	}
 });
 
-/* field: checkInOut */
-// show DatePicker Modal
+/* show DatePicker Modal */
 checkInOutField.addEventListener('click', e => {
 	store.dispatch(actions.showDatePickerModal());
 });
 
-/* field: occupancy */
 /* toggle occupancy-dropDown */
 occupancyField.addEventListener('click', e => {
 	e.stopPropagation();
@@ -63,7 +57,6 @@ occupancyField.addEventListener('click', e => {
 	}
 });
 
-/* field: occupancy */
 /* hide occupancy-dropDown */
 document.addEventListener('click', e => {
 	if (
