@@ -14,6 +14,8 @@ const creatStore = reducer => {
 	};
 
 	const dispatch = action => {
+		console.log('action fired: ', action.type, action);
+
 		state = reducer(state, action);
 
 		listeners.map(cb => cb());

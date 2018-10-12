@@ -3,16 +3,15 @@ import Modal from './Modal';
 import store from './stateManager/store';
 import * as actions from './stateManager/actions';
 
-let datePicker;
-let modal = new Modal();
-// DOM elements
-let reservationForm = document.querySelector('[data-hook=reservation-form]');
-let checkInOutField = reservationForm.querySelector('[data-hook=form-field-check-in-out]');
-let occupancyField = reservationForm.querySelector('[data-hook=form-field-occupancy]');
-let destinitionField = reservationForm.querySelector('[data-hook=form-field-destinition]');
-let occupancyDropDown = occupancyField.querySelector('.form-field__dropdown--occupancy');
-let searchField = reservationForm.querySelector('[ data-hook=form-field-search]');
-let destinitionList = reservationForm.querySelector('[ data-hook*=destinition-list]');
+let datePicker,
+	modal = new Modal(),
+	reservationForm = document.querySelector('[data-hook=reservation-form]'),
+	checkInOutField = reservationForm.querySelector('[data-hook=form-field-check-in-out]'),
+	occupancyField = reservationForm.querySelector('[data-hook=form-field-occupancy]'),
+	destinitionField = reservationForm.querySelector('[data-hook=form-field-destinition]'),
+	occupancyDropDown = occupancyField.querySelector('.form-field__dropdown--occupancy'),
+	searchField = reservationForm.querySelector('[ data-hook=form-field-search]'),
+	destinitionList = reservationForm.querySelector('[ data-hook*=destinition-list]');
 
 // DEBUG
 store.subscribe(() => console.log(store.getState()));
@@ -46,7 +45,7 @@ searchField.addEventListener('focus', e => {
 /* type: changes state */
 /* field: destinition */
 document.addEventListener('click', e => {
-	if (e.target !== searchField) {
+	if (e.target !== searchField && store.getState().ui.visibleDropdown === 'destination-list') {
 		store.dispatch(actions.hideDropDown());
 	}
 });
@@ -62,6 +61,27 @@ checkInOutField.addEventListener('click', e => {
 /* field: destinition */
 function updateDestinationDOM() {
 	searchField.innerHTML = store.getState().destinition;
+}
+/* type: changes DOM */
+function showDestinationListDOM() {
+	if (store.getState().ui.visibleDropdown === 'destination-list') {
+		destinitionList.classList.add('visibile');
+	}
+}
+/* type: changes DOM */
+function hideDestinationListDOM() {
+	if (store.getState().ui.visibleDropdown !== 'destination-list') {
+		destinitionList.classList.remove('visibile');
+	}
+}
+/* type: changes DOM */
+/* field: checkInOut */
+/* show check-in-out datePicker */
+function showDatePickerDOM() {
+	if (store.getState().ui.visibleDropdown === 'date-picker-modal') {
+		modal.open();
+		datePicker = DateRangePicker(document.querySelector('.modal-body'));
+	}
 }
 /* type: changes DOM */
 /* field: occupancy */
@@ -83,28 +103,7 @@ function updateOccopancyDOM() {
 		`;
 	});
 }
-/* type: changes DOM */
-function showDestinationListDOM() {
-	if (store.getState().ui.visibleDropdown === 'destination-list') {
-		destinitionList.classList.add('visibile');
-	}
-}
-/* type: changes DOM */
-function hideDestinationListDOM() {
-	if (store.getState().ui.visibleDropdown !== 'destination-list') {
-		destinitionList.classList.remove('visibile');
-	}
-}
 
-/* type: changes DOM */
-/* field: checkInOut */
-/* show check-in-out datePicker */
-function showDatePickerDOM() {
-	if (store.getState().ui.visibleDropdown !== 'date-picker-modal') {
-		modal.open();
-		datePicker = DateRangePicker(document.querySelector('.modal-body'));
-	}
-}
 // ********************************************
 /* type: subscribe to store changes */
 store.subscribe(updateDestinationDOM);

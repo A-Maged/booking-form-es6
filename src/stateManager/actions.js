@@ -1,5 +1,3 @@
-// ACTION CREATORS
-
 export const actionTypes = {
 	UPDATE_DESTINATION: 'UPDATE_DESTINATION',
 	UPDATE_CHECK_IN_OUT: 'UPDATE_CHECK_IN_OUT',
@@ -9,6 +7,7 @@ export const actionTypes = {
 };
 
 /* FORM ACTIONS */
+/* ************ */
 
 export const updateDestination = value => {
 	return {
@@ -32,6 +31,7 @@ export const updateOccopancy = value => {
 };
 
 /* UI ACTIONS */
+/* ********** */
 
 export const showDestinitionList = () => {
 	return {
