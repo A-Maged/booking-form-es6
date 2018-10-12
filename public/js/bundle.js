@@ -1553,22 +1553,44 @@ _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe(function (
 // NOTE :
 // only change dom using state and predefined functions
 // *******************************************************************
+// ********************************************
 
 /* type: changes state */
+
+/* field: destinition */
+// update Destination from event value
 
 searchField.addEventListener('input', function (e) {
   _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(_stateManager_actions__WEBPACK_IMPORTED_MODULE_3__["updateDestination"](e.target.value));
 });
 /* type: changes state */
 
-/* field: destinition-list */
+/* field: destinition */
+// update Destination from li
+
+destinitionList.addEventListener('click', function (e) {
+  _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(_stateManager_actions__WEBPACK_IMPORTED_MODULE_3__["updateDestination"](e.target.innerHTML));
+});
+/* type: changes state */
+
+/* field: destinition */
 
 searchField.addEventListener('focus', function (e) {
   _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(_stateManager_actions__WEBPACK_IMPORTED_MODULE_3__["showDestinitionList"]());
 });
+/* type: changes state */
+
+/* field: destinition */
+
+document.addEventListener('click', function (e) {
+  if (e.target !== searchField) {
+    _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(_stateManager_actions__WEBPACK_IMPORTED_MODULE_3__["hideDestinitionList"]());
+  }
+}); // ********************************************
+
 /* type: changes DOM */
 
-/* field: destinition-list */
+/* field: destinition */
 
 function updateDestinationDOM() {
   searchField.innerHTML = _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].getState().destinition;
@@ -1593,30 +1615,26 @@ function showDestinationListDOM() {
     destinitionList.classList.add('visibile');
   }
 }
+/* type: changes DOM */
+
+
+function hideDestinationListDOM() {
+  if (_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].getState().ui.visibleDropdown !== 'destination-list') {
+    destinitionList.classList.remove('visibile');
+  }
+} // ********************************************
+
 /* type: subscribe to store changes */
 
 
 _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe(updateDestinationDOM);
 _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe(updateOccopancyDOM);
-_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe(showDestinationListDOM); // ******************************************************************************************
+_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe(showDestinationListDOM);
+_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe(hideDestinationListDOM); // ******************************************************************************************
+// ******************************************************************************************
+// ******************************************************************************************
 // ******************************************************************************************
 
-/* type: changes DOM */
-
-/* field: destinition-list */
-
-document.addEventListener('click', function (e) {
-  if (e.target !== searchField) {
-    destinitionList.classList.remove('visibile');
-  }
-});
-/* type: changes state */
-
-/* field: destinition-list */
-
-destinitionList.addEventListener('click', function (e) {
-  _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(_stateManager_actions__WEBPACK_IMPORTED_MODULE_3__["updateDestination"](e.target.innerHTML));
-});
 /* type: changes DOM */
 
 /* field: occupancy */
@@ -1656,7 +1674,7 @@ checkInOutField.addEventListener('click', function (e) {
 /*!*************************************!*\
   !*** ./src/stateManager/actions.js ***!
   \*************************************/
-/*! exports provided: actionTypes, updateDestination, updateCheckInOut, updateOccopancy, showDestinitionList */
+/*! exports provided: actionTypes, updateDestination, updateCheckInOut, updateOccopancy, showDestinitionList, hideDestinitionList */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1666,6 +1684,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateCheckInOut", function() { return updateCheckInOut; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateOccopancy", function() { return updateOccopancy; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "showDestinitionList", function() { return showDestinitionList; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hideDestinitionList", function() { return hideDestinitionList; });
 // ACTION CREATORS
 var actionTypes = {
   UPDATE_DESTINATION: 'UPDATE_DESTINATION',
@@ -1697,7 +1716,14 @@ var updateOccopancy = function updateOccopancy(value) {
 
 var showDestinitionList = function showDestinitionList() {
   return {
-    type: actionTypes.UPDATE_VISIBLE_DROPDOWN
+    type: actionTypes.UPDATE_VISIBLE_DROPDOWN,
+    value: 'destination-list'
+  };
+};
+var hideDestinitionList = function hideDestinitionList() {
+  return {
+    type: actionTypes.UPDATE_VISIBLE_DROPDOWN,
+    value: ''
   };
 };
 
@@ -1771,7 +1797,7 @@ function uiReducer() {
   switch (action.type) {
     case _actions__WEBPACK_IMPORTED_MODULE_0__["actionTypes"].UPDATE_VISIBLE_DROPDOWN:
       return _objectSpread({}, state, {
-        visibleDropdown: 'destination-list'
+        visibleDropdown: action.value
       });
 
     default:

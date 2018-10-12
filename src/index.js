@@ -22,19 +22,38 @@ store.subscribe(() => console.log(store.getState()));
 // only change dom using state and predefined functions
 // *******************************************************************
 
+// ********************************************
 /* type: changes state */
+/* field: destinition */
+// update Destination from event value
 searchField.addEventListener('input', e => {
 	store.dispatch(actions.updateDestination(e.target.value));
 });
 
 /* type: changes state */
-/* field: destinition-list */
+/* field: destinition */
+// update Destination from li
+destinitionList.addEventListener('click', e => {
+	store.dispatch(actions.updateDestination(e.target.innerHTML));
+});
+
+/* type: changes state */
+/* field: destinition */
 searchField.addEventListener('focus', e => {
 	store.dispatch(actions.showDestinitionList());
 });
 
+/* type: changes state */
+/* field: destinition */
+document.addEventListener('click', e => {
+	if (e.target !== searchField) {
+		store.dispatch(actions.hideDestinitionList());
+	}
+});
+
+// ********************************************
 /* type: changes DOM */
-/* field: destinition-list */
+/* field: destinition */
 function updateDestinationDOM() {
 	searchField.innerHTML = store.getState().destinition;
 }
@@ -64,28 +83,24 @@ function showDestinationListDOM() {
 		destinitionList.classList.add('visibile');
 	}
 }
+/* type: changes DOM */
+function hideDestinationListDOM() {
+	if (store.getState().ui.visibleDropdown !== 'destination-list') {
+		destinitionList.classList.remove('visibile');
+	}
+}
 
+// ********************************************
 /* type: subscribe to store changes */
 store.subscribe(updateDestinationDOM);
 store.subscribe(updateOccopancyDOM);
 store.subscribe(showDestinationListDOM);
+store.subscribe(hideDestinationListDOM);
 
 // ******************************************************************************************
 // ******************************************************************************************
-
-/* type: changes DOM */
-/* field: destinition-list */
-document.addEventListener('click', e => {
-	if (e.target !== searchField) {
-		destinitionList.classList.remove('visibile');
-	}
-});
-
-/* type: changes state */
-/* field: destinition-list */
-destinitionList.addEventListener('click', e => {
-	store.dispatch(actions.updateDestination(e.target.innerHTML));
-});
+// ******************************************************************************************
+// ******************************************************************************************
 
 /* type: changes DOM */
 /* field: occupancy */

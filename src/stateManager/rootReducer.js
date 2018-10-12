@@ -37,7 +37,7 @@ let uiInitialState = {
 function uiReducer(state = uiInitialState, action) {
 	switch (action.type) {
 		case actionTypes.UPDATE_VISIBLE_DROPDOWN:
-			return { ...state, visibleDropdown: 'destination-list' };
+			return { ...state, visibleDropdown: action.value };
 
 		default:
 			return state;

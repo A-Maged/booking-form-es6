@@ -35,6 +35,13 @@ export const updateOccopancy = value => {
 
 export const showDestinitionList = () => {
 	return {
-		type: actionTypes.UPDATE_VISIBLE_DROPDOWN
+		type: actionTypes.UPDATE_VISIBLE_DROPDOWN,
+		value: 'destination-list'
+	};
+};
+export const hideDestinitionList = () => {
+	return {
+		type: actionTypes.UPDATE_VISIBLE_DROPDOWN,
+		value: ''
 	};
 };
