@@ -1,0 +1,30 @@
+{
+	"name": "hotels-form-task",
+	"version": "1.0.0",
+	"description": "",
+	"main": "webpack.config.js",
+	"scripts": {
+		"watch": "webpack --watch",
+		"serve": "webpack-dev-server --watch --host 0.0.0.0 --content-base \"public/\" "
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@babel/core": "^7.1.2",
+		"@babel/preset-env": "^7.1.0",
+		"babel-loader": "^8.0.4",
+		"css-loader": "^1.0.0",
+		"mini-css-extract-plugin": "^0.4.4",
+		"node-sass": "^4.9.3",
+		"optimize-css-assets-webpack-plugin": "^5.0.1",
+		"sass-loader": "^7.1.0",
+		"webpack": "^4.20.2",
+		"webpack-cli": "^3.1.2",
+		"webpack-dev-server": "^3.1.9"
+	},
+	"dependencies": {
+		"normalize.css": "^8.0.0",
+		"tiny-date-picker": "^3.2.6"
+	}
+}
