@@ -3,8 +3,12 @@
 export const actionTypes = {
 	UPDATE_DESTINATION: 'UPDATE_DESTINATION',
 	UPDATE_CHECK_IN_OUT: 'UPDATE_CHECK_IN_OUT',
-	UPDATE_OCCUPANCY: 'UPDATE_OCCUPANCY'
+	UPDATE_OCCUPANCY: 'UPDATE_OCCUPANCY',
+
+	UPDATE_VISIBLE_DROPDOWN: 'UPDATE_VISIBLE_DROPDOWN'
 };
+
+/* FORM ACTIONS */
 
 export const updateDestination = value => {
 	return {
@@ -24,5 +28,13 @@ export const updateOccopancy = value => {
 	return {
 		type: actionTypes.UPDATE_OCCUPANCY,
 		value
+	};
+};
+
+/* UI ACTIONS */
+
+export const showDestinitionList = () => {
+	return {
+		type: actionTypes.UPDATE_VISIBLE_DROPDOWN
 	};
 };

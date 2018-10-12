@@ -1540,7 +1540,7 @@ var datePicker;
 var modal = new _Modal__WEBPACK_IMPORTED_MODULE_1__["default"](); // DOM elements
 
 var reservationForm = document.querySelector('[data-hook=reservation-form]');
-var checkInOut = reservationForm.querySelector('[data-hook=form-field-check-in-out]');
+var checkInOutField = reservationForm.querySelector('[data-hook=form-field-check-in-out]');
 var occupancyField = reservationForm.querySelector('[data-hook=form-field-occupancy]');
 var destinitionField = reservationForm.querySelector('[data-hook=form-field-destinition]');
 var occupancyDropDown = occupancyField.querySelector('.form-field__dropdown--occupancy');
@@ -1550,42 +1550,77 @@ var destinitionList = reservationForm.querySelector('[ data-hook*=destinition-li
 _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe(function () {
   return console.log(_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].getState());
 }); // *******************************************************************
+// NOTE :
+// only change dom using state and predefined functions
+// *******************************************************************
 
-/* only change dom using state and predefined functions */
+/* type: changes state */
 
 searchField.addEventListener('input', function (e) {
   _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(_stateManager_actions__WEBPACK_IMPORTED_MODULE_3__["updateDestination"](e.target.value));
 });
-_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe(function updateDestinationDOM() {
-  searchField.innerHTML = _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].getState().destinition;
+/* type: changes state */
+
+/* field: destinition-list */
+
+searchField.addEventListener('focus', function (e) {
+  _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(_stateManager_actions__WEBPACK_IMPORTED_MODULE_3__["showDestinitionList"]());
 });
-_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe(function updateOccopancyDOM() {
+/* type: changes DOM */
+
+/* field: destinition-list */
+
+function updateDestinationDOM() {
+  searchField.innerHTML = _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].getState().destinition;
+}
+/* type: changes DOM */
+
+/* field: occupancy */
+
+
+function updateOccopancyDOM() {
   var state = _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].getState().form.occupancy;
   occupancyDropDown.innerHTML = '';
   state.forEach(function (room, idx) {
     occupancyDropDown.innerHTML += "\n\t\t\t<div class=\"occupancy__room\">\n\t\t\t\t<span class=\"occupancy__room__label\">Room ".concat(idx + 1, "</span>\n\t\t\t\t<select name=\"occupancy__room-").concat(idx, "-adults\">\n\t\t\t\t\t<option selected=\"selected\" value=\"").concat(room.adults, "\">").concat(room.adults, "</option>\n\t\t\t\t\t<option value=\"1\">1</option>\n\t\t\t\t\t<option value=\"2\">2</option>\n\t\t\t\t\t<option value=\"3\">3</option>\n\t\t\t\t</select>\n\t\t\t</div>\n\t\t");
   });
-}); // *******************************************************************
-// *******************************************************************
-// *******************************************************************
+}
+/* type: changes DOM */
 
-/* show  destinition-list */
 
-searchField.addEventListener('focus', function (e) {
-  destinitionList.classList.add('visibile');
-});
-/* hide  destinition-list */
+function showDestinationListDOM() {
+  if (_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].getState().ui.visibleDropdown === 'destination-list') {
+    destinitionList.classList.add('visibile');
+  }
+}
+/* type: subscribe to store changes */
+
+
+_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe(updateDestinationDOM);
+_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe(updateOccopancyDOM);
+_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe(showDestinationListDOM); // ******************************************************************************************
+// ******************************************************************************************
+
+/* type: changes DOM */
+
+/* field: destinition-list */
 
 document.addEventListener('click', function (e) {
   if (e.target !== searchField) {
     destinitionList.classList.remove('visibile');
   }
 });
-/* update state: destiniation */
+/* type: changes state */
+
+/* field: destinition-list */
 
 destinitionList.addEventListener('click', function (e) {
   _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(_stateManager_actions__WEBPACK_IMPORTED_MODULE_3__["updateDestination"](e.target.innerHTML));
 });
+/* type: changes DOM */
+
+/* field: occupancy */
+
 /* toggle occupancy-dropDown */
 
 occupancyField.addEventListener('click', function (e) {
@@ -1593,9 +1628,13 @@ occupancyField.addEventListener('click', function (e) {
     occupancyDropDown.classList.toggle('visibile');
   }
 });
+/* type: changes DOM */
+
+/* field: checkInOut */
+
 /* show check-in-out datePicker */
 
-checkInOut.addEventListener('click', function (e) {
+checkInOutField.addEventListener('click', function (e) {
   modal.open();
   datePicker = Object(tiny_date_picker_dist_date_range_picker__WEBPACK_IMPORTED_MODULE_0__["DateRangePicker"])(document.querySelector('.modal-body'));
 });
@@ -1617,7 +1656,7 @@ checkInOut.addEventListener('click', function (e) {
 /*!*************************************!*\
   !*** ./src/stateManager/actions.js ***!
   \*************************************/
-/*! exports provided: actionTypes, updateDestination, updateCheckInOut, updateOccopancy */
+/*! exports provided: actionTypes, updateDestination, updateCheckInOut, updateOccopancy, showDestinitionList */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1626,12 +1665,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateDestination", function() { return updateDestination; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateCheckInOut", function() { return updateCheckInOut; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateOccopancy", function() { return updateOccopancy; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "showDestinitionList", function() { return showDestinitionList; });
 // ACTION CREATORS
 var actionTypes = {
   UPDATE_DESTINATION: 'UPDATE_DESTINATION',
   UPDATE_CHECK_IN_OUT: 'UPDATE_CHECK_IN_OUT',
-  UPDATE_OCCUPANCY: 'UPDATE_OCCUPANCY'
+  UPDATE_OCCUPANCY: 'UPDATE_OCCUPANCY',
+  UPDATE_VISIBLE_DROPDOWN: 'UPDATE_VISIBLE_DROPDOWN'
 };
+/* FORM ACTIONS */
+
 var updateDestination = function updateDestination(value) {
   return {
     type: actionTypes.UPDATE_DESTINATION,
@@ -1648,6 +1691,13 @@ var updateOccopancy = function updateOccopancy(value) {
   return {
     type: actionTypes.UPDATE_OCCUPANCY,
     value: value
+  };
+};
+/* UI ACTIONS */
+
+var showDestinitionList = function showDestinitionList() {
+  return {
+    type: actionTypes.UPDATE_VISIBLE_DROPDOWN
   };
 };
 
@@ -1676,7 +1726,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
-var InitialState = {
+var formInitialState = {
   destinition: '',
   checkInOut: {
     start: '1',
@@ -1686,7 +1736,7 @@ var InitialState = {
 };
 
 function formReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : InitialState;
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : formInitialState;
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
@@ -1710,11 +1760,31 @@ function formReducer() {
   }
 }
 
+var uiInitialState = {
+  visibleDropdown: ''
+};
+
+function uiReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : uiInitialState;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _actions__WEBPACK_IMPORTED_MODULE_0__["actionTypes"].UPDATE_VISIBLE_DROPDOWN:
+      return _objectSpread({}, state, {
+        visibleDropdown: 'destination-list'
+      });
+
+    default:
+      return state;
+  }
+}
+
 function rootReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
   return {
-    form: formReducer(state.form, action)
+    form: formReducer(state.form, action),
+    ui: uiReducer(state.ui, action)
   };
 }
 

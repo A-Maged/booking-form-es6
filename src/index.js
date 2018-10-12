@@ -7,7 +7,7 @@ let datePicker;
 let modal = new Modal();
 // DOM elements
 let reservationForm = document.querySelector('[data-hook=reservation-form]');
-let checkInOut = reservationForm.querySelector('[data-hook=form-field-check-in-out]');
+let checkInOutField = reservationForm.querySelector('[data-hook=form-field-check-in-out]');
 let occupancyField = reservationForm.querySelector('[data-hook=form-field-occupancy]');
 let destinitionField = reservationForm.querySelector('[data-hook=form-field-destinition]');
 let occupancyDropDown = occupancyField.querySelector('.form-field__dropdown--occupancy');
@@ -18,17 +18,29 @@ let destinitionList = reservationForm.querySelector('[ data-hook*=destinition-li
 store.subscribe(() => console.log(store.getState()));
 
 // *******************************************************************
-/* only change dom using state and predefined functions */
+// NOTE :
+// only change dom using state and predefined functions
+// *******************************************************************
 
+/* type: changes state */
 searchField.addEventListener('input', e => {
 	store.dispatch(actions.updateDestination(e.target.value));
 });
 
-store.subscribe(function updateDestinationDOM() {
-	searchField.innerHTML = store.getState().destinition;
+/* type: changes state */
+/* field: destinition-list */
+searchField.addEventListener('focus', e => {
+	store.dispatch(actions.showDestinitionList());
 });
 
-store.subscribe(function updateOccopancyDOM() {
+/* type: changes DOM */
+/* field: destinition-list */
+function updateDestinationDOM() {
+	searchField.innerHTML = store.getState().destinition;
+}
+/* type: changes DOM */
+/* field: occupancy */
+function updateOccopancyDOM() {
 	let state = store.getState().form.occupancy;
 	occupancyDropDown.innerHTML = '';
 
@@ -45,27 +57,38 @@ store.subscribe(function updateOccopancyDOM() {
 			</div>
 		`;
 	});
-});
+}
+/* type: changes DOM */
+function showDestinationListDOM() {
+	if (store.getState().ui.visibleDropdown === 'destination-list') {
+		destinitionList.classList.add('visibile');
+	}
+}
 
-// *******************************************************************
-// *******************************************************************
-// *******************************************************************
+/* type: subscribe to store changes */
+store.subscribe(updateDestinationDOM);
+store.subscribe(updateOccopancyDOM);
+store.subscribe(showDestinationListDOM);
 
-/* show  destinition-list */
-searchField.addEventListener('focus', e => {
-	destinitionList.classList.add('visibile');
-});
-/* hide  destinition-list */
+// ******************************************************************************************
+// ******************************************************************************************
+
+/* type: changes DOM */
+/* field: destinition-list */
 document.addEventListener('click', e => {
 	if (e.target !== searchField) {
 		destinitionList.classList.remove('visibile');
 	}
 });
-/* update state: destiniation */
+
+/* type: changes state */
+/* field: destinition-list */
 destinitionList.addEventListener('click', e => {
 	store.dispatch(actions.updateDestination(e.target.innerHTML));
 });
 
+/* type: changes DOM */
+/* field: occupancy */
 /* toggle occupancy-dropDown */
 occupancyField.addEventListener('click', e => {
 	if (
@@ -77,8 +100,10 @@ occupancyField.addEventListener('click', e => {
 	}
 });
 
+/* type: changes DOM */
+/* field: checkInOut */
 /* show check-in-out datePicker */
-checkInOut.addEventListener('click', e => {
+checkInOutField.addEventListener('click', e => {
 	modal.open();
 	datePicker = DateRangePicker(document.querySelector('.modal-body'));
 });

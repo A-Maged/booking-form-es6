@@ -1,6 +1,6 @@
 import { actionTypes } from './actions';
 
-let InitialState = {
+let formInitialState = {
 	destinition: '',
 	checkInOut: {
 		start: '1',
@@ -9,7 +9,7 @@ let InitialState = {
 	occupancy: []
 };
 
-function formReducer(state = InitialState, action) {
+function formReducer(state = formInitialState, action) {
 	switch (action.type) {
 		case actionTypes.UPDATE_DESTINATION:
 			return { ...state, destinition: action.value };
@@ -30,9 +30,24 @@ function formReducer(state = InitialState, action) {
 	}
 }
 
+let uiInitialState = {
+	visibleDropdown: ''
+};
+
+function uiReducer(state = uiInitialState, action) {
+	switch (action.type) {
+		case actionTypes.UPDATE_VISIBLE_DROPDOWN:
+			return { ...state, visibleDropdown: 'destination-list' };
+
+		default:
+			return state;
+	}
+}
+
 function rootReducer(state = {}, action) {
 	return {
-		form: formReducer(state.form, action)
+		form: formReducer(state.form, action),
+		ui: uiReducer(state.ui, action)
 	};
 }
 
