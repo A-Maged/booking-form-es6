@@ -39,9 +39,15 @@ export const showDestinitionList = () => {
 		value: 'destination-list'
 	};
 };
-export const hideDestinitionList = () => {
+export const hideDropDown = () => {
 	return {
 		type: actionTypes.UPDATE_VISIBLE_DROPDOWN,
 		value: ''
+	};
+};
+export const showDatePickerModal = () => {
+	return {
+		type: actionTypes.UPDATE_VISIBLE_DROPDOWN,
+		value: 'date-picker-modal'
 	};
 };

@@ -1584,8 +1584,15 @@ searchField.addEventListener('focus', function (e) {
 
 document.addEventListener('click', function (e) {
   if (e.target !== searchField) {
-    _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(_stateManager_actions__WEBPACK_IMPORTED_MODULE_3__["hideDestinitionList"]());
+    _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(_stateManager_actions__WEBPACK_IMPORTED_MODULE_3__["hideDropDown"]());
   }
+});
+/* type: changes state */
+
+/* field: checkInOut */
+
+checkInOutField.addEventListener('click', function (e) {
+  _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(_stateManager_actions__WEBPACK_IMPORTED_MODULE_3__["showDatePickerModal"]());
 }); // ********************************************
 
 /* type: changes DOM */
@@ -1622,6 +1629,19 @@ function hideDestinationListDOM() {
   if (_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].getState().ui.visibleDropdown !== 'destination-list') {
     destinitionList.classList.remove('visibile');
   }
+}
+/* type: changes DOM */
+
+/* field: checkInOut */
+
+/* show check-in-out datePicker */
+
+
+function showDatePickerDOM() {
+  if (_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].getState().ui.visibleDropdown !== 'date-picker-modal') {
+    modal.open();
+    datePicker = Object(tiny_date_picker_dist_date_range_picker__WEBPACK_IMPORTED_MODULE_0__["DateRangePicker"])(document.querySelector('.modal-body'));
+  }
 } // ********************************************
 
 /* type: subscribe to store changes */
@@ -1630,7 +1650,8 @@ function hideDestinationListDOM() {
 _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe(updateDestinationDOM);
 _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe(updateOccopancyDOM);
 _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe(showDestinationListDOM);
-_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe(hideDestinationListDOM); // ******************************************************************************************
+_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe(hideDestinationListDOM);
+_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe(showDatePickerDOM); // ******************************************************************************************
 // ******************************************************************************************
 // ******************************************************************************************
 // ******************************************************************************************
@@ -1645,16 +1666,6 @@ occupancyField.addEventListener('click', function (e) {
   if (e.target === e.currentTarget || e.target === occupancyField.querySelector('.form-field__icon') || e.target === occupancyField.querySelector('.form-field__value-box')) {
     occupancyDropDown.classList.toggle('visibile');
   }
-});
-/* type: changes DOM */
-
-/* field: checkInOut */
-
-/* show check-in-out datePicker */
-
-checkInOutField.addEventListener('click', function (e) {
-  modal.open();
-  datePicker = Object(tiny_date_picker_dist_date_range_picker__WEBPACK_IMPORTED_MODULE_0__["DateRangePicker"])(document.querySelector('.modal-body'));
 });
 
 /***/ }),
@@ -1674,7 +1685,7 @@ checkInOutField.addEventListener('click', function (e) {
 /*!*************************************!*\
   !*** ./src/stateManager/actions.js ***!
   \*************************************/
-/*! exports provided: actionTypes, updateDestination, updateCheckInOut, updateOccopancy, showDestinitionList, hideDestinitionList */
+/*! exports provided: actionTypes, updateDestination, updateCheckInOut, updateOccopancy, showDestinitionList, hideDropDown, showDatePickerModal */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1684,7 +1695,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateCheckInOut", function() { return updateCheckInOut; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateOccopancy", function() { return updateOccopancy; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "showDestinitionList", function() { return showDestinitionList; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hideDestinitionList", function() { return hideDestinitionList; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hideDropDown", function() { return hideDropDown; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "showDatePickerModal", function() { return showDatePickerModal; });
 // ACTION CREATORS
 var actionTypes = {
   UPDATE_DESTINATION: 'UPDATE_DESTINATION',
@@ -1720,10 +1732,16 @@ var showDestinitionList = function showDestinitionList() {
     value: 'destination-list'
   };
 };
-var hideDestinitionList = function hideDestinitionList() {
+var hideDropDown = function hideDropDown() {
   return {
     type: actionTypes.UPDATE_VISIBLE_DROPDOWN,
     value: ''
+  };
+};
+var showDatePickerModal = function showDatePickerModal() {
+  return {
+    type: actionTypes.UPDATE_VISIBLE_DROPDOWN,
+    value: 'date-picker-modal'
   };
 };
 

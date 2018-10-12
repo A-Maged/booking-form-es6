@@ -47,8 +47,14 @@ searchField.addEventListener('focus', e => {
 /* field: destinition */
 document.addEventListener('click', e => {
 	if (e.target !== searchField) {
-		store.dispatch(actions.hideDestinitionList());
+		store.dispatch(actions.hideDropDown());
 	}
+});
+
+/* type: changes state */
+/* field: checkInOut */
+checkInOutField.addEventListener('click', e => {
+	store.dispatch(actions.showDatePickerModal());
 });
 
 // ********************************************
@@ -90,12 +96,22 @@ function hideDestinationListDOM() {
 	}
 }
 
+/* type: changes DOM */
+/* field: checkInOut */
+/* show check-in-out datePicker */
+function showDatePickerDOM() {
+	if (store.getState().ui.visibleDropdown !== 'date-picker-modal') {
+		modal.open();
+		datePicker = DateRangePicker(document.querySelector('.modal-body'));
+	}
+}
 // ********************************************
 /* type: subscribe to store changes */
 store.subscribe(updateDestinationDOM);
 store.subscribe(updateOccopancyDOM);
 store.subscribe(showDestinationListDOM);
 store.subscribe(hideDestinationListDOM);
+store.subscribe(showDatePickerDOM);
 
 // ******************************************************************************************
 // ******************************************************************************************
@@ -113,12 +129,4 @@ occupancyField.addEventListener('click', e => {
 	) {
 		occupancyDropDown.classList.toggle('visibile');
 	}
-});
-
-/* type: changes DOM */
-/* field: checkInOut */
-/* show check-in-out datePicker */
-checkInOutField.addEventListener('click', e => {
-	modal.open();
-	datePicker = DateRangePicker(document.querySelector('.modal-body'));
 });
