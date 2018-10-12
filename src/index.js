@@ -1,7 +1,6 @@
 /*********************************************************
  * NOTE :
- * only change dom using predefined functions
- * that are invoked on state changes
+ * only change dom using in contained functions that are invoked on state changes
  *********************************************************/
 
 import './stateManager/stateEvents';

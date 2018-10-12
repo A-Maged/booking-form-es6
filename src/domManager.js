@@ -14,30 +14,30 @@ let datePicker,
 /* Functions That Changes DOM */
 /*******************************/
 
-function updateDestinationDOM() {
+function updateDestination() {
 	searchField.value = store.getState().form.destinition;
 }
 
-function showDestinationListDOM() {
+function showDestinationList() {
 	if (store.getState().ui.visibleDropdown === 'destination-list') {
 		destinitionList.classList.add('visibile');
 	}
 }
 
-function hideDestinationListDOM() {
+function hideDestinationList() {
 	if (store.getState().ui.visibleDropdown !== 'destination-list') {
 		destinitionList.classList.remove('visibile');
 	}
 }
 
-function showDatePickerDOM() {
+function showDatePicker() {
 	if (store.getState().ui.visibleDropdown === 'date-picker-modal') {
 		modal.open();
 		datePicker = DateRangePicker(document.querySelector('.modal-body'));
 	}
 }
 
-function updateOccopancyDOM() {
+function updateOccopancy() {
 	let state = store.getState().form.occupancy;
 	occupancyDropDown.innerHTML = `
 		<button data-hook="occupancy-add-room" class="occupancy__add-room">add room</button>
@@ -58,13 +58,13 @@ function updateOccopancyDOM() {
 	});
 }
 
-function showOccupancyDropDownDOM() {
+function showOccupancyDropDown() {
 	if (store.getState().ui.visibleDropdown === 'occupancy-dropDown') {
 		occupancyDropDown.classList.add('visibile');
 	}
 }
 
-function hideOccupancyDropDownDOM() {
+function hideOccupancyDropDown() {
 	if (store.getState().ui.visibleDropdown !== 'occupancy-dropDown') {
 		occupancyDropDown.classList.remove('visibile');
 	}
@@ -73,10 +73,10 @@ function hideOccupancyDropDownDOM() {
 /* ************************** */
 /* Subscribe To Store Changes */
 /* ************************** */
-store.subscribe(updateDestinationDOM);
-store.subscribe(updateOccopancyDOM);
-store.subscribe(showDestinationListDOM);
-store.subscribe(hideDestinationListDOM);
-store.subscribe(showDatePickerDOM);
-store.subscribe(showOccupancyDropDownDOM);
-store.subscribe(hideOccupancyDropDownDOM);
+store.subscribe(updateDestination);
+store.subscribe(updateOccopancy);
+store.subscribe(showDestinationList);
+store.subscribe(hideDestinationList);
+store.subscribe(showDatePicker);
+store.subscribe(showOccupancyDropDown);
+store.subscribe(hideOccupancyDropDown);
