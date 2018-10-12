@@ -51,3 +51,9 @@ export const showDatePickerModal = () => {
 		value: 'date-picker-modal'
 	};
 };
+export const showOccupancyDropDown = () => {
+	return {
+		type: actionTypes.UPDATE_VISIBLE_DROPDOWN,
+		value: 'occupancy-dropDown'
+	};
+};

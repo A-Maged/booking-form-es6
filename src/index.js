@@ -14,7 +14,7 @@ let datePicker,
 	destinitionList = reservationForm.querySelector('[ data-hook*=destinition-list]');
 
 // DEBUG
-store.subscribe(() => console.log(store.getState()));
+// store.subscribe(() => console.log(store.getState()));
 
 /*********************************************************
  * NOTE :
@@ -22,6 +22,7 @@ store.subscribe(() => console.log(store.getState()));
  * that are invoked on state changes
  *********************************************************/
 
+/*******************************/
 /* Functions That Changes State */
 /*******************************/
 
@@ -38,11 +39,13 @@ destinitionList.addEventListener('click', e => {
 });
 
 /* field: destinition */
+// show destination list
 searchField.addEventListener('focus', e => {
 	store.dispatch(actions.showDestinitionList());
 });
 
 /* field: destinition */
+// hide destination list
 document.addEventListener('click', e => {
 	if (e.target !== searchField && store.getState().ui.visibleDropdown === 'destination-list') {
 		store.dispatch(actions.hideDropDown());
@@ -50,10 +53,44 @@ document.addEventListener('click', e => {
 });
 
 /* field: checkInOut */
+// show DatePicker Modal
 checkInOutField.addEventListener('click', e => {
 	store.dispatch(actions.showDatePickerModal());
 });
 
+/* field: occupancy */
+/* toggle occupancy-dropDown */
+occupancyField.addEventListener('click', e => {
+	console.log('occupancyField');
+
+	e.stopPropagation();
+
+	if (store.getState().ui.visibleDropdown === 'occupancy-dropDown') {
+		store.dispatch(actions.hideDropDown());
+		return;
+	}
+
+	if (
+		e.target === e.currentTarget ||
+		e.target === occupancyField.querySelector('.form-field__icon') ||
+		e.target === occupancyField.querySelector('.form-field__value-box')
+	) {
+		store.dispatch(actions.showOccupancyDropDown());
+	}
+});
+
+/* field: occupancy */
+/* hide occupancy-dropDown */
+document.addEventListener('click', e => {
+	if (
+		store.getState().ui.visibleDropdown === 'occupancy-dropDown' &&
+		e.target !== occupancyDropDown
+	) {
+		store.dispatch(actions.hideDropDown());
+	}
+});
+
+/*******************************/
 /* Functions That Changes DOM */
 /*******************************/
 
@@ -82,7 +119,7 @@ function showDatePickerDOM() {
 
 function updateOccopancyDOM() {
 	let state = store.getState().form.occupancy;
-	occupancyDropDown.innerHTML = '';
+	// occupancyDropDown.innerHTML = '';
 
 	state.forEach((room, idx) => {
 		occupancyDropDown.innerHTML += `
@@ -99,6 +136,21 @@ function updateOccopancyDOM() {
 	});
 }
 
+function showOccupancyDropDownDOM() {
+	if (store.getState().ui.visibleDropdown === 'occupancy-dropDown') {
+		console.log('showOccupancyDropDownDOM');
+
+		occupancyDropDown.classList.add('visibile');
+	}
+}
+
+function hideOccupancyDropDownDOM() {
+	if (store.getState().ui.visibleDropdown !== 'occupancy-dropDown') {
+		occupancyDropDown.classList.remove('visibile');
+	}
+}
+
+/* ************************** */
 /* Subscribe To Store Changes */
 /* ************************** */
 store.subscribe(updateDestinationDOM);
@@ -106,21 +158,5 @@ store.subscribe(updateOccopancyDOM);
 store.subscribe(showDestinationListDOM);
 store.subscribe(hideDestinationListDOM);
 store.subscribe(showDatePickerDOM);
-
-// ******************************************************************************************
-// ******************************************************************************************
-// ******************************************************************************************
-// ******************************************************************************************
-
-/* type: changes DOM */
-/* field: occupancy */
-/* toggle occupancy-dropDown */
-occupancyField.addEventListener('click', e => {
-	if (
-		e.target === e.currentTarget ||
-		e.target === occupancyField.querySelector('.form-field__icon') ||
-		e.target === occupancyField.querySelector('.form-field__value-box')
-	) {
-		occupancyDropDown.classList.toggle('visibile');
-	}
-});
+store.subscribe(showOccupancyDropDownDOM);
+store.subscribe(hideOccupancyDropDownDOM);

@@ -30,4 +30,7 @@ const creatStore = reducer => {
 
 const store = creatStore(rootReducer);
 
+// FOR DEBUGGING
+window.store = store;
+
 export default store;

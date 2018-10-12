@@ -1545,15 +1545,15 @@ var datePicker,
     occupancyDropDown = occupancyField.querySelector('.form-field__dropdown--occupancy'),
     searchField = reservationForm.querySelector('[ data-hook=form-field-search]'),
     destinitionList = reservationForm.querySelector('[ data-hook*=destinition-list]'); // DEBUG
+// store.subscribe(() => console.log(store.getState()));
 
-_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe(function () {
-  return console.log(_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].getState());
-});
 /*********************************************************
  * NOTE :
  * only change dom using predefined functions
  * that are invoked on state changes
  *********************************************************/
+
+/*******************************/
 
 /* Functions That Changes State */
 
@@ -1572,11 +1572,13 @@ destinitionList.addEventListener('click', function (e) {
   _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(_stateManager_actions__WEBPACK_IMPORTED_MODULE_3__["updateDestination"](e.target.innerHTML));
 });
 /* field: destinition */
+// show destination list
 
 searchField.addEventListener('focus', function (e) {
   _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(_stateManager_actions__WEBPACK_IMPORTED_MODULE_3__["showDestinitionList"]());
 });
 /* field: destinition */
+// hide destination list
 
 document.addEventListener('click', function (e) {
   if (e.target !== searchField && _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].getState().ui.visibleDropdown === 'destination-list') {
@@ -1584,10 +1586,39 @@ document.addEventListener('click', function (e) {
   }
 });
 /* field: checkInOut */
+// show DatePicker Modal
 
 checkInOutField.addEventListener('click', function (e) {
   _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(_stateManager_actions__WEBPACK_IMPORTED_MODULE_3__["showDatePickerModal"]());
 });
+/* field: occupancy */
+
+/* toggle occupancy-dropDown */
+
+occupancyField.addEventListener('click', function (e) {
+  console.log('occupancyField');
+  e.stopPropagation();
+
+  if (_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].getState().ui.visibleDropdown === 'occupancy-dropDown') {
+    _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(_stateManager_actions__WEBPACK_IMPORTED_MODULE_3__["hideDropDown"]());
+    return;
+  }
+
+  if (e.target === e.currentTarget || e.target === occupancyField.querySelector('.form-field__icon') || e.target === occupancyField.querySelector('.form-field__value-box')) {
+    _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(_stateManager_actions__WEBPACK_IMPORTED_MODULE_3__["showOccupancyDropDown"]());
+  }
+});
+/* field: occupancy */
+
+/* hide occupancy-dropDown */
+
+document.addEventListener('click', function (e) {
+  if (_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].getState().ui.visibleDropdown === 'occupancy-dropDown' && e.target !== occupancyDropDown) {
+    _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(_stateManager_actions__WEBPACK_IMPORTED_MODULE_3__["hideDropDown"]());
+  }
+});
+/*******************************/
+
 /* Functions That Changes DOM */
 
 /*******************************/
@@ -1616,12 +1647,27 @@ function showDatePickerDOM() {
 }
 
 function updateOccopancyDOM() {
-  var state = _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].getState().form.occupancy;
-  occupancyDropDown.innerHTML = '';
+  var state = _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].getState().form.occupancy; // occupancyDropDown.innerHTML = '';
+
   state.forEach(function (room, idx) {
     occupancyDropDown.innerHTML += "\n\t\t\t<div class=\"occupancy__room\">\n\t\t\t\t<span class=\"occupancy__room__label\">Room ".concat(idx + 1, "</span>\n\t\t\t\t<select name=\"occupancy__room-").concat(idx, "-adults\">\n\t\t\t\t\t<option selected=\"selected\" value=\"").concat(room.adults, "\">").concat(room.adults, "</option>\n\t\t\t\t\t<option value=\"1\">1</option>\n\t\t\t\t\t<option value=\"2\">2</option>\n\t\t\t\t\t<option value=\"3\">3</option>\n\t\t\t\t</select>\n\t\t\t</div>\n\t\t");
   });
 }
+
+function showOccupancyDropDownDOM() {
+  if (_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].getState().ui.visibleDropdown === 'occupancy-dropDown') {
+    console.log('showOccupancyDropDownDOM');
+    occupancyDropDown.classList.add('visibile');
+  }
+}
+
+function hideOccupancyDropDownDOM() {
+  if (_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].getState().ui.visibleDropdown !== 'occupancy-dropDown') {
+    occupancyDropDown.classList.remove('visibile');
+  }
+}
+/* ************************** */
+
 /* Subscribe To Store Changes */
 
 /* ************************** */
@@ -1631,22 +1677,9 @@ _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe(updateDest
 _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe(updateOccopancyDOM);
 _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe(showDestinationListDOM);
 _stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe(hideDestinationListDOM);
-_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe(showDatePickerDOM); // ******************************************************************************************
-// ******************************************************************************************
-// ******************************************************************************************
-// ******************************************************************************************
-
-/* type: changes DOM */
-
-/* field: occupancy */
-
-/* toggle occupancy-dropDown */
-
-occupancyField.addEventListener('click', function (e) {
-  if (e.target === e.currentTarget || e.target === occupancyField.querySelector('.form-field__icon') || e.target === occupancyField.querySelector('.form-field__value-box')) {
-    occupancyDropDown.classList.toggle('visibile');
-  }
-});
+_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe(showDatePickerDOM);
+_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe(showOccupancyDropDownDOM);
+_stateManager_store__WEBPACK_IMPORTED_MODULE_2__["default"].subscribe(hideOccupancyDropDownDOM);
 
 /***/ }),
 
@@ -1665,7 +1698,7 @@ occupancyField.addEventListener('click', function (e) {
 /*!*************************************!*\
   !*** ./src/stateManager/actions.js ***!
   \*************************************/
-/*! exports provided: actionTypes, updateDestination, updateCheckInOut, updateOccopancy, showDestinitionList, hideDropDown, showDatePickerModal */
+/*! exports provided: actionTypes, updateDestination, updateCheckInOut, updateOccopancy, showDestinitionList, hideDropDown, showDatePickerModal, showOccupancyDropDown */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1677,6 +1710,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "showDestinitionList", function() { return showDestinitionList; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hideDropDown", function() { return hideDropDown; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "showDatePickerModal", function() { return showDatePickerModal; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "showOccupancyDropDown", function() { return showOccupancyDropDown; });
 var actionTypes = {
   UPDATE_DESTINATION: 'UPDATE_DESTINATION',
   UPDATE_CHECK_IN_OUT: 'UPDATE_CHECK_IN_OUT',
@@ -1725,6 +1759,12 @@ var showDatePickerModal = function showDatePickerModal() {
   return {
     type: actionTypes.UPDATE_VISIBLE_DROPDOWN,
     value: 'date-picker-modal'
+  };
+};
+var showOccupancyDropDown = function showOccupancyDropDown() {
+  return {
+    type: actionTypes.UPDATE_VISIBLE_DROPDOWN,
+    value: 'occupancy-dropDown'
   };
 };
 
@@ -1865,7 +1905,9 @@ var creatStore = function creatStore(reducer) {
   };
 };
 
-var store = creatStore(_rootReducer__WEBPACK_IMPORTED_MODULE_0__["default"]);
+var store = creatStore(_rootReducer__WEBPACK_IMPORTED_MODULE_0__["default"]); // FOR DEBUGGING
+
+window.store = store;
 /* harmony default export */ __webpack_exports__["default"] = (store);
 
 /***/ }),
