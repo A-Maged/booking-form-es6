@@ -1,4 +1,6 @@
 import store from './stateManager/store';
+import * as actions from './stateManager/actions';
+import moment from 'moment';
 import { DateRangePicker } from 'tiny-date-picker/dist/date-range-picker';
 import Modal from './Modal';
 
@@ -6,6 +8,7 @@ let datePicker,
 	modal = new Modal(),
 	reservationForm = document.querySelector('[data-hook=reservation-form]'),
 	searchField = reservationForm.querySelector('[ data-hook=form-field-search]'),
+	dateField = reservationForm.querySelector('[ data-hook=form-field-check-in-out]'),
 	occupancyField = reservationForm.querySelector('[data-hook=form-field-occupancy]'),
 	occupancyDropDown = occupancyField.querySelector('.form-field__dropdown--occupancy'),
 	destinitionList = reservationForm.querySelector('[ data-hook*=destinition-list]');
@@ -34,7 +37,25 @@ function showDatePicker() {
 	if (store.getState().ui.visibleDropdown === 'date-picker-modal') {
 		modal.open();
 		datePicker = DateRangePicker(document.querySelector('.modal-body'));
+
+		datePicker.on('statechange', function(_, dp) {
+			if (dp.state.end) {
+				store.dispatch(
+					actions.updateCheckInOut({
+						start: moment(dp.state.start).format('D MMM YYYY'),
+						end: moment(dp.state.end).format('D MMM YYYY')
+					})
+				);
+
+				modal.close();
+			}
+		});
 	}
+}
+
+function updateDatePicker() {
+	let date = store.getState().form.checkInOut;
+	dateField.querySelector('div').innerHTML = date.start + ' - ' + date.end;
 }
 
 function updateOccopancy() {
@@ -80,5 +101,6 @@ store.subscribe(updateOccopancy);
 store.subscribe(showDestinationList);
 store.subscribe(hideDestinationList);
 store.subscribe(showDatePicker);
+store.subscribe(updateDatePicker);
 store.subscribe(showOccupancyDropDown);
 store.subscribe(hideOccupancyDropDown);
