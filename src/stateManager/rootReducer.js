@@ -1,11 +1,12 @@
 import { actionTypes } from './actions';
 import { combineReducers } from 'redux';
+import moment from 'moment';
 
 let formInitialState = {
 	destinition: '',
 	checkInOut: {
-		start: '1',
-		end: '2'
+		start: '',
+		end: ''
 	},
 	occupancy: [
 		{

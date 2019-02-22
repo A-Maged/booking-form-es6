@@ -42,8 +42,8 @@ function showDatePicker() {
 			if (dp.state.end) {
 				store.dispatch(
 					actions.updateCheckInOut({
-						start: moment(dp.state.start).format('D MMM YYYY'),
-						end: moment(dp.state.end).format('D MMM YYYY')
+						start: moment(dp.state.start).format('DD MMM YYYY'),
+						end: moment(dp.state.end).format('DD MMM YYYY')
 					})
 				);
 

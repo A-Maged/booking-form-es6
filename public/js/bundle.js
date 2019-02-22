@@ -19952,8 +19952,8 @@ function showDatePicker() {
     datePicker.on('statechange', function (_, dp) {
       if (dp.state.end) {
         _stateManager_store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch(_stateManager_actions__WEBPACK_IMPORTED_MODULE_1__["updateCheckInOut"]({
-          start: moment__WEBPACK_IMPORTED_MODULE_2___default()(dp.state.start).format('D MMM YYYY'),
-          end: moment__WEBPACK_IMPORTED_MODULE_2___default()(dp.state.end).format('D MMM YYYY')
+          start: moment__WEBPACK_IMPORTED_MODULE_2___default()(dp.state.start).format('DD MMM YYYY'),
+          end: moment__WEBPACK_IMPORTED_MODULE_2___default()(dp.state.end).format('DD MMM YYYY')
         }));
         modal.close();
       }
@@ -20014,12 +20014,23 @@ _stateManager_store__WEBPACK_IMPORTED_MODULE_0__["default"].subscribe(hideOccupa
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _stateManager_stateEvents__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./stateManager/stateEvents */ "./src/stateManager/stateEvents.js");
 /* harmony import */ var _domManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./domManager */ "./src/domManager.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _stateManager_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./stateManager/store */ "./src/stateManager/store.js");
+/* harmony import */ var _stateManager_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./stateManager/actions */ "./src/stateManager/actions.js");
 /*********************************************************
  * NOTE :
  * only change dom using in contained functions that are invoked on state changes
  *********************************************************/
 
 
+
+
+
+_stateManager_store__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch(_stateManager_actions__WEBPACK_IMPORTED_MODULE_4__["updateCheckInOut"]({
+  start: moment__WEBPACK_IMPORTED_MODULE_2___default()().format('DD MMM YYYY'),
+  end: moment__WEBPACK_IMPORTED_MODULE_2___default()().format('DD MMM YYYY')
+}));
 
 /***/ }),
 
@@ -20139,6 +20150,8 @@ var showOccupancyDropDown = function showOccupancyDropDown() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./actions */ "./src/stateManager/actions.js");
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -20153,11 +20166,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 var formInitialState = {
   destinition: '',
   checkInOut: {
-    start: '1',
-    end: '2'
+    start: '',
+    end: ''
   },
   occupancy: [{
     adults: 1,
