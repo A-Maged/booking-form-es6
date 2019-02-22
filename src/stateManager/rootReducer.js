@@ -31,6 +31,16 @@ function formReducer(state = formInitialState, action) {
 				...state,
 				occupancy: [...state.occupancy, action.value]
 			};
+
+		case actionTypes.REMOVE_OCCUPANCY_ROOM:
+			let newArr = [...state.occupancy];
+			newArr.pop();
+
+			return {
+				...state,
+				occupancy: [...newArr]
+			};
+
 		default:
 			return state;
 	}

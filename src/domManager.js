@@ -41,7 +41,8 @@ function updateOccopancy() {
 	let state = store.getState().form.occupancy;
 
 	occupancyDropDown.innerHTML = `
-		<button data-hook="occupancy-add-room" class="occupancy__add-room">add room</button>
+		<button type="button" data-hook="occupancy-add-room" class="occupancy__add-room">add room</button>
+		<button type="button" data-hook="occupancy-remove-room" class="occupancy__remove-room">remove room</button>
 	`;
 
 	state.forEach((room, idx) => {
@@ -59,9 +60,9 @@ function updateOccopancy() {
 	});
 }
 
-function toggleOccupancyDropDown() {
+function showOccupancyDropDown() {
 	if (store.getState().ui.visibleDropdown === 'occupancy-dropDown') {
-		occupancyDropDown.classList.toggle('visibile');
+		occupancyDropDown.classList.add('visibile');
 	}
 }
 
@@ -79,5 +80,5 @@ store.subscribe(updateOccopancy);
 store.subscribe(showDestinationList);
 store.subscribe(hideDestinationList);
 store.subscribe(showDatePicker);
-store.subscribe(toggleOccupancyDropDown);
+store.subscribe(showOccupancyDropDown);
 store.subscribe(hideOccupancyDropDown);
